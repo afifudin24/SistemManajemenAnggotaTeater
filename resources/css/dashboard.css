@@ -1,0 +1,8 @@
+@import './style.css';
+@import '../vendors/css/vendor.bundle.base.css';
+@import '../vendors/select2-bootstrap-theme/select2-bootstrap.min.css';
+@import '../vendors/feather/feather.css';
+@import '../vendors/mdi/css/materialdesignicons.min.css';
+@import '../vendors/font-awesome/css/font-awesome.min.css';
+@import '../vendors/ti-icons/css/themify-icons.css';
+
