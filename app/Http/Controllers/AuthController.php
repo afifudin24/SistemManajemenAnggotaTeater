@@ -15,6 +15,7 @@ class AuthController extends Controller {
     }
 
     public function login( Request $request ) {
+
         $request->validate( [
             'username' => 'required',
             'password' => 'required',
@@ -49,6 +50,7 @@ class AuthController extends Controller {
             Session::put( 'user', $user );
 
             return redirect( '/dashboard' );
+
         }
 
         return back()->with( 'error', 'Username atau password salah.' );

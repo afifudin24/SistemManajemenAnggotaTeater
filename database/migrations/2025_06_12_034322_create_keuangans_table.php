@@ -1,9 +1,7 @@
 <?php
-
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
-
 return new class extends Migration
 {
     /**
@@ -19,12 +17,9 @@ return new class extends Migration
     $table->decimal('jumlah', 15, 2);
     $table->text('keterangan');
     $table->string('bukti_transaksi', 100);
-
     $table->foreign('id_bendahara')->references('id_bendahara')->on('bendahara')->onDelete('cascade');
 });
-
     }
-
     /**
      * Reverse the migrations.
      */

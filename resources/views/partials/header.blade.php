@@ -6,14 +6,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title>Sistem Manajemen Anggota Teater</title>
     <!-- plugins:css -->
-     @vite(['resources/css/dashboard.css', 'resources/css/app.css', 'resources/js/app.js'])
+     @vite(['resources/css/dashboard.css'])
     <!-- endinject -->
     <!-- Plugin css for this page -->
     <!-- End plugin css for this page -->
     <!-- inject:css -->
    
     <link rel="shortcut icon" href="../../assets/images/favicon.png" />
-      <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+      {{-- <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script> --}}
   </head>
   <body>
     <div class="container-scroller">
@@ -28,7 +28,7 @@
       <span class="icon-menu"></span>
     </button>
     <ul class="navbar-nav mr-lg-2">
-      <li class="nav-item nav-search d-none d-lg-block">
+      {{-- <li class="nav-item nav-search d-none d-lg-block">
         <div class="input-group">
           <div class="input-group-prepend hover-cursor" id="navbar-search-icon">
             <span class="input-group-text" id="search">
@@ -37,7 +37,7 @@
           </div>
           <input type="text" class="form-control" id="navbar-search-input" placeholder="Search now" aria-label="search" aria-describedby="search">
         </div>
-      </li>
+      </li> --}}
     </ul>
     <ul class="navbar-nav navbar-nav-right">
       <li class="nav-item dropdown">
@@ -84,20 +84,28 @@
       </li>
       <li class="nav-item nav-profile dropdown">
         <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown" id="profileDropdown">
-          <img src="../../assets/images/faces/face28.jpg" alt="profile" />
+          {{-- <img src="../../assets/images/faces/face28.jpg" alt="profile" />
+           --}}
+           @if(session('role') == 'admin')
+           {{ session('user')->admin_name }}
+           @else
+           {{ session('user')->nama }}
+           @endif
         </a>
         <div class="dropdown-menu dropdown-menu-right navbar-dropdown" aria-labelledby="profileDropdown">
           <a class="dropdown-item">
             <i class="ti-settings text-primary"></i> Settings </a>
-          <a class="dropdown-item">
-            <i class="ti-power-off text-primary"></i> Logout </a>
+          {{-- <a class="dropdown-item">
+            <i class="ti-power-off text-primary"></i> Logout </a> --}}
+            <form action="{{ route('logout') }}" method="POST">
+    @csrf
+    <button type="submit" class="dropdown-item">
+        <i class="ti-power-off text-primary"></i> Logout
+    </button>
+</form>
         </div>
       </li>
-      <li class="nav-item nav-settings d-none d-lg-flex">
-        <a class="nav-link" href="#">
-          <i class="icon-ellipsis"></i>
-        </a>
-      </li>
+    
     </ul>
     <button class="navbar-toggler navbar-toggler-right d-lg-none align-self-center" type="button" data-toggle="offcanvas">
       <span class="icon-menu"></span>

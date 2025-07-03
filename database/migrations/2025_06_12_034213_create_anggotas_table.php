@@ -13,6 +13,7 @@ return new class extends Migration
     {
        Schema::create('anggota', function (Blueprint $table) {
     $table->id('id_anggota');
+    $table->foreignId('id_pembina')->nullable()->constrained('pembina')->onDelete('cascade');
     $table->string('nama', 100);
     $table->string('username', 100);
     $table->string('password', 100);

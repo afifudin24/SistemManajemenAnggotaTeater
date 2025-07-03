@@ -6,9 +6,9 @@ import './settings'
 import './todolist'
 import './jquery.cookie';
 import './dashboard';
+import './bootstrap';
 // import './typeahead';
 
-// import './bootstrap';
 // import './chart';
 // import './codemirror';
 // import './dashboard-dark';
