@@ -12,7 +12,8 @@
     <!-- End plugin css for this page -->
     <!-- inject:css -->
    
-    <link rel="shortcut icon" href="../../assets/images/favicon.png" />
+   <link rel="shortcut icon" href="{{ asset('images/logo.png') }}" />
+
       {{-- <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script> --}}
   </head>
   <body>
