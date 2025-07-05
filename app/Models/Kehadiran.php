@@ -14,8 +14,9 @@ class Kehadiran extends Model {
 
     protected $fillable = [
         'id_jadwal',
+        'id_pembina',
         'id_anggota',
-        'waktu_pencatatan',
+        'tanggal_pencatatan',
         'catatan',
     ];
 
@@ -25,5 +26,9 @@ class Kehadiran extends Model {
 
     public function anggota() {
         return $this->belongsTo( Anggota::class, 'id_anggota' );
+    }
+
+    public function pembina() {
+        return $this->belongsTo( Pembina::class, 'id_pembina' );
     }
 }

@@ -39,7 +39,7 @@
     @elseif(session('role') == 'pembina')
     
      <li class="nav-item">
-      <a class="nav-link {{ request()->is('jadwalteater') ? 'active' : ''}}" href="/jadwalteater">
+      <a class="nav-link {{ request()->is('absenanggota') ? 'active' : ''}}" href="/absenanggota">
         <i class="icon-head menu-icon"></i>
         <span class="menu-title">Absen Anggota</span>
       </a>

@@ -43,8 +43,8 @@
                             <td>{{ $item->username }}</td>
                             <td>@if ($item->status == 1) Aktif @else Tidak Aktif @endif</td>
                             <td>
-                              <button class="btn btn-primary">Edit</button>
-                              <button class="btn btn-danger">Hapus</button>
+                              <button data-bs-toggle="modal" data-bs-target="#editModal" data-user='@json($item)' class="btn btnEdit btn-primary">Edit</button>
+                              <button data-bs-toggle="modal" data-bs-target="#hapusModal" data-user='@json($item)' class="btn btnHapus btn-danger">Hapus</button>
                             </td>
                           </tr>
                         @endforeach
@@ -121,10 +121,10 @@
 
                 <!-- Header -->
                 <div class="modal-header">
-                    <h5 class="modal-title" id="contohModalLabel">Edit Anggota</h5>
+                    <h5 class="modal-title" id="contohModalLabel">Edit Bendahara</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-
+                
                 <!-- Body -->
                 <div class="modal-body">
                     {{-- form tambah Bendahara --}}
@@ -134,12 +134,12 @@
                         <div class="form-floating mb-3">
                             <input type="text" class="form-control" name="nama" id="nama_edit"
                                 placeholder="Nama Anggota" required>
-                            <label for="nama_edit" class="form-label">Nama Anggota</label>
+                            <label for="nama_edit" class="form-label">Nama Bendahara</label>
                         </div>
                         <div class="form-floating mb-3">
-                            <input type="text" class="form-control" name="nis" id="nis_edit"
-                                placeholder="NIS" required>
-                            <label for="nis_edit" class="form-label">NIS</label>
+                            <input type="text" class="form-control" name="periode" id="periode_edit"
+                                placeholder="Periode" required>
+                            <label for="periode_edit" class="form-label">Periode</label>
                         </div>
                        
                         <div class="form-floating mb-3">
@@ -147,6 +147,14 @@
                                 placeholder="Username" required>
                             <label for="username_edit" class="form-label">Username</label>
                         </div>
+
+                         <div class="form-floating mb-3">
+                                <select class="form-select" name="status" id="status_edit">
+                                    <option value="" disabled selected>Status</option>
+                                    <option value="1">Aktif</option>
+                                    <option value="0">Tidak Aktif</option>
+                                </select>
+                         </div>
                            
                       
                 </div>
@@ -185,5 +193,29 @@
             </form>
         </div>
     </div>
+     @push('scripts')
+        <script>
+            console.log("oke");
+
+            $('.btnEdit').click(function() {
+                let user = $(this).data('user');
+                console.log(user);
+                $('#nama_edit').val(user.nama);
+                
+                $('#periode_edit').val(user.periode);
+                $('#username_edit').val(user.username);
+               
+                $('#status_edit').val(user.status);
+                $('#editForm').attr('action', `/updatebendahara/${user.id_bendahara}`);
+            })
+
+            $('.btnHapus').click(function() {
+                let user = $(this).data('user');
+                console.log(user)
+                $('#formHapus').attr('action', `/hapusbendahara/${user.id_bendahara}`);
+            });
+        </script>
+    @endpush
+          
           
 @endsection

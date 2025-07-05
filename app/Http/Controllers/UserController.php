@@ -206,6 +206,41 @@ class UserController extends Controller {
         return redirect()->route( 'bendahara' )->with( 'success', 'Bendahara berhasil ditambahkan.' );
     }
 
+    public function updateBendahara( $id, Request $request ) {
+        // Validasi input
+        $request->validate( [
+            'nama' => 'required|string|max:255',
+            'username' => 'required|string|max:20',
+            'periode' => 'required',
+        ], [
+            'nama.required' => 'Nama wajib diisi.',
+            'nama.string' => 'Nama harus berupa teks.',
+            'nama.max' => 'Nama tidak boleh lebih dari 255 karakter.',
+
+            'username.required' => 'Username wajib diisi.',
+            'username.string' => 'Username harus berupa teks.',
+            'username.max' => 'Username tidak boleh lebih dari 20 karakter.',
+
+            'periode.required' => 'Periode wajib diisi.',
+        ] );
+
+        // simpan data
+        $bendahara = Bendahara::find( $id );
+        $bendahara->nama = $request->nama;
+        $bendahara->username = $request->username;
+        $bendahara->periode = $request->periode;
+        $bendahara->save();
+
+        return redirect()->route( 'bendahara' )->with( 'success', 'Bendahara berhasil diperbarui.' );
+
+    }
+
+    public function hapusBendahara( $id ) {
+        $bendahara = Bendahara::find( $id );
+        $bendahara->delete();
+        return redirect()->route( 'bendahara' )->with( 'success', 'Bendahara berhasil dihapus.' );
+    }
+
     public function getPembina() {
         $pembina = Pembina::paginate( 10 );
         return view( 'admin.user.pembina', compact( 'pembina' ) );

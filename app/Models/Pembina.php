@@ -22,4 +22,8 @@ class Pembina extends Model {
     public function jadwal() {
         return $this->hasMany( Jadwal::class, 'id_pembina' );
     }
+
+    public function kehadiran() {
+        return $this->hasMany( Kehadiran::class, 'id_pembina' );
+    }
 }
