@@ -4,6 +4,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\KehadiranController;
+use App\Http\Controllers\KeuanganController;
 use App\Http\Controllers\JadwalController;
 use App\Http\Middleware\CekLogin;
 Route::get('/', function () {
@@ -63,6 +64,17 @@ Route::middleware([CekLogin::class . ':pembina'])->group(function () {
     Route::get('/absenanggota', [KehadiranController::class, 'index'])->name('kehadiran');
     Route::post('/absenanggota', [KehadiranController::class, 'tambahKehadiran'])->name('kehadiran.store');
     Route::put('/absenanggota', [KehadiranController::class, 'updateKehadiran'])->name('kehadiran.update');
+});
+
+Route::middleware([CekLogin::class . ':bendahara'])->group(function () {
+    // Kelola Keuangan
+    Route::get('/keuangan', [KeuanganController::class, 'index'])->name('keuangan.index');
+    Route::post('/tambahkeuangan', [KeuanganController::class, 'store'])->name('keuangan.store');
+    Route::put('/updatekeuangan/{id}', [KeuanganController::class, 'update'])->name('keuangan.update');
+    Route::delete('/hapuskeuangan/{id}', [KeuanganController::class, 'destroy'])->name('keuangan.destroy');
+    Route::get('/rekapkas', [KeuanganController::class, 'rekap'])->name('keuangan.rekap');
+    Route::get('/keuangan/rekap-pdf', [KeuanganController::class, 'cetakPDF'])->name('keuangan.cetakPDF');
+
 });
 
 

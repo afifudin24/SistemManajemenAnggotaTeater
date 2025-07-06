@@ -11,7 +11,7 @@
     <!-- Plugin css for this page -->
     <!-- End plugin css for this page -->
     <!-- inject:css -->
-   
+
    <link rel="shortcut icon" href="{{ asset('images/logo.png') }}" />
 
       {{-- <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script> --}}
@@ -21,8 +21,8 @@
       <!-- partial:../../partials/_navbar.html -->
       <nav class="navbar col-lg-12 col-12 p-0 fixed-top d-flex flex-row">
   <div class="text-center navbar-brand-wrapper d-flex align-items-center justify-content-start">
-    <a class="navbar-brand brand-logo me-5" href="../../index.html"><img src="../../assets/images/logo.svg" class="me-2" alt="logo" /></a>
-    <a class="navbar-brand brand-logo-mini" href="../../index.html"><img src="../../assets/images/logo-mini.svg" alt="logo" /></a>
+    <a class="navbar-brand brand-logo me-5" href="/">SiKeTe</a>
+    <a class="navbar-brand brand-logo-mini" href="/"><img src="{{ asset('images/logo.png') }}" class="img-fluid" alt="logo" /></a>
   </div>
   <div class="navbar-menu-wrapper d-flex align-items-center justify-content-end">
     <button class="navbar-toggler navbar-toggler align-self-center" type="button" data-toggle="minimize">
@@ -96,17 +96,14 @@
         <div class="dropdown-menu dropdown-menu-right navbar-dropdown" aria-labelledby="profileDropdown">
           <a class="dropdown-item">
             <i class="ti-settings text-primary"></i> Settings </a>
-          {{-- <a class="dropdown-item">
-            <i class="ti-power-off text-primary"></i> Logout </a> --}}
-            <form action="{{ route('logout') }}" method="POST">
-    @csrf
-    <button type="submit" class="dropdown-item">
-        <i class="ti-power-off text-primary"></i> Logout
-    </button>
+            <a href="#" class="dropdown-item" data-bs-toggle="modal" data-bs-target="#logoutModal">
+  <i class="ti-power-off text-primary"></i> Logout
+</a>
+
 </form>
         </div>
       </li>
-    
+
     </ul>
     <button class="navbar-toggler navbar-toggler-right d-lg-none align-self-center" type="button" data-toggle="offcanvas">
       <span class="icon-menu"></span>
@@ -115,3 +112,25 @@
 </nav>
       <!-- partial -->
       <div class="container-fluid page-body-wrapper">
+        <!-- Modal Konfirmasi Logout -->
+<div class="modal fade" id="logoutModal" tabindex="-1" aria-labelledby="logoutModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header bg-danger text-white">
+        <h5 class="modal-title" id="logoutModalLabel">Konfirmasi Logout</h5>
+        <button type="button" class="btn-close bg-white" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body text-center">
+        Apakah kamu yakin ingin logout?
+      </div>
+      <div class="modal-footer justify-content-center">
+        <form id="logoutForm" action="{{ route('logout') }}" method="POST">
+          @csrf
+          <button type="submit" class="btn btn-danger">Yakin, Logout</button>
+        </form>
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
+      </div>
+    </div>
+  </div>
+</div>
+

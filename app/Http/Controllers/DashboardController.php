@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Admin;
 use App\Models\Pembina;
+use App\Models\Keuangan;
 use App\Models\Bendahara;
 use App\Models\Anggota;
 
@@ -21,7 +22,12 @@ class DashboardController extends Controller {
         } elseif ( $role == 'pembina' ) {
             return view( 'pembina.dashboard' );
         } elseif ( $role == 'bendahara' ) {
-            return view( 'bendahara.dashboard' );
+            $bulanIni = date( 'm' );
+            $pemasukan = Keuangan::where( 'jenis', 'pemasukan' )->whereMonth( 'tanggal', $bulanIni )->sum( 'jumlah' );
+            $pengeluaran = Keuangan::where( 'jenis', 'pengeluaran' )->whereMonth( 'tanggal', $bulanIni )->sum( 'jumlah' );
+            $saldoTerkini = Keuangan::where( 'jenis', 'pemasukan' )->sum( 'jumlah' ) - Keuangan::where( 'jenis', 'pengeluaran' )->sum( 'jumlah' );
+            return view( 'bendahara.dashboard', compact( 'pemasukan', 'pengeluaran', 'bulanIni', 'saldoTerkini' ) );
+            // return view( 'bendahara.dashboard' );
         } elseif ( $role == 'anggota' ) {
             return view( 'anggota.dashboard' );
         }

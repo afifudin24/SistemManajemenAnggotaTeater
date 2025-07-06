@@ -37,7 +37,7 @@
     </li>
 
     @elseif(session('role') == 'pembina')
-    
+
      <li class="nav-item">
       <a class="nav-link {{ request()->is('absenanggota') ? 'active' : ''}}" href="/absenanggota">
         <i class="icon-head menu-icon"></i>
@@ -92,25 +92,27 @@
 
     @elseif(session('role') == 'bendahara')
      <li class="nav-item">
-      <a class="nav-link {{ request()->is('kelolakeuangan') ? 'active' : ''}}" href="/kelolakeuangan">
+     <a class="nav-link {{ request()->is('keuangan') ? 'active' : ''}}" href="/keuangan">
         <i class="icon-columns menu-icon"></i>
         <span class="menu-title">Kelola Keuangan</span>
       </a>
     </li>
      <li class="nav-item">
-      <a class="nav-link {{ request()->is('rekaplaporankeuangan') ? 'active' : ''}}" href="/rekaplaporankeuangan">
+     <a class="nav-link {{ request()->is('rekapkas') ? 'active' : ''}}" href="/rekapkas">
         <i class="icon-paper menu-icon"></i>
         <span class="menu-title">Rekap Keuangan</span>
       </a>
     </li>
 
+
+
     @endif
-   
-   
-   
-   
-   
-    
-    
+
+
+
+
+
+
+
   </ul>
 </nav>
