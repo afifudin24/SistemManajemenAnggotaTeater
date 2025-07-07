@@ -164,4 +164,61 @@ class KehadiranController extends Controller {
     public function destroy( Kehadiran $kehadiran ) {
         //
     }
+
+    public function absenSaya( Request $request ) {
+        $user = session()->get( 'user' );
+
+        // Ambil parameter bulan dari query, misal: ?bulan = 2025-07
+        $bulanQuery = $request->query( 'bulan' );
+
+        // Jika ada query bulan, gunakan itu, kalau tidak, pakai bulan sekarang
+        if ( $bulanQuery ) {
+            try {
+                $tanggal = Carbon::createFromFormat( 'Y-m', $bulanQuery );
+            } catch ( \Exception $e ) {
+                // Kalau format bulan salah, fallback ke sekarang
+                $tanggal = Carbon::now();
+            }
+        } else {
+            $tanggal = Carbon::now();
+        }
+
+        // Ambil data berdasarkan bulan tersebut
+        $kehadiran = Kehadiran::with( 'anggota' )->with( 'jadwal' )
+        ->where( 'id_pembina', $user->id_pembina )
+        ->where( 'id_anggota', $user->id_anggota )
+        ->whereYear( 'tanggal_pencatatan', $tanggal->year )
+        ->whereMonth( 'tanggal_pencatatan', $tanggal->month )
+        ->get();
+
+        $totalhadir =  Kehadiran::with( 'anggota' )->with( 'jadwal' )
+        ->where( 'id_pembina', $user->id_pembina )
+        ->where( 'id_anggota', $user->id_anggota )
+        ->whereYear( 'tanggal_pencatatan', $tanggal->year )
+        ->whereMonth( 'tanggal_pencatatan', $tanggal->month )
+        ->where( 'status_kehadiran', 'Hadir' )->count();
+
+        $totalsakit = Kehadiran::with( 'anggota' )->with( 'jadwal' )
+        ->where( 'id_pembina', $user->id_pembina )
+        ->where( 'id_anggota', $user->id_anggota )
+        ->whereYear( 'tanggal_pencatatan', $tanggal->year )
+        ->whereMonth( 'tanggal_pencatatan', $tanggal->month )
+        ->where( 'status_kehadiran', 'Sakit' )->count();
+
+        $totalizin =  Kehadiran::with( 'anggota' )->with( 'jadwal' )
+        ->where( 'id_pembina', $user->id_pembina )
+        ->where( 'id_anggota', $user->id_anggota )
+        ->whereYear( 'tanggal_pencatatan', $tanggal->year )
+        ->whereMonth( 'tanggal_pencatatan', $tanggal->month )
+        ->where( 'status_kehadiran', 'Izin' )->count();
+
+        $totalalpa =    Kehadiran::with( 'anggota' )->with( 'jadwal' )
+        ->where( 'id_pembina', $user->id_pembina )
+        ->where( 'id_anggota', $user->id_anggota )
+        ->whereYear( 'tanggal_pencatatan', $tanggal->year )
+        ->whereMonth( 'tanggal_pencatatan', $tanggal->month )
+        ->where( 'status_kehadiran', 'Alpha' )->count();
+
+        return view( 'anggota.absensaya', compact( 'kehadiran', 'bulanQuery', 'totalhadir', 'totalsakit', 'totalizin', 'totalalpa' ) );
+    }
 }

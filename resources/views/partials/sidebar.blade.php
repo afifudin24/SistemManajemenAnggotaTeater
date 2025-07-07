@@ -78,7 +78,7 @@
       </a>
     </li>
     <li class="nav-item">
-      <a class="nav-link {{ request()->is('kasteater') ? 'active' : ''}}" href="/kasteater">
+      <a class="nav-link {{ request()->is('absensaya') ? 'active' : ''}}" href="/absensaya">
         <i class="icon-bar-graph menu-icon"></i>
         <span class="menu-title">Absen Saya</span>
       </a>

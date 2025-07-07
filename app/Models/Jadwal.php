@@ -27,4 +27,8 @@ class Jadwal extends Model {
     public function pembina() {
         return $this->belongsTo( Pembina::class, 'id_pembina' );
     }
+
+    public function kehadiran() {
+        return $this->hasMany( Kehadiran::class, 'id_jadwal' );
+    }
 }

@@ -5,6 +5,7 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\KehadiranController;
 use App\Http\Controllers\KeuanganController;
+use App\Http\Controllers\PunishmentController;
 use App\Http\Controllers\JadwalController;
 use App\Http\Middleware\CekLogin;
 Route::get('/', function () {
@@ -73,11 +74,25 @@ Route::middleware([CekLogin::class . ':bendahara'])->group(function () {
     Route::put('/updatekeuangan/{id}', [KeuanganController::class, 'update'])->name('keuangan.update');
     Route::delete('/hapuskeuangan/{id}', [KeuanganController::class, 'destroy'])->name('keuangan.destroy');
     Route::get('/rekapkas', [KeuanganController::class, 'rekap'])->name('keuangan.rekap');
-    Route::get('/keuangan/rekap-pdf', [KeuanganController::class, 'cetakPDF'])->name('keuangan.cetakPDF');
-
+  
 });
 
+Route::middleware([CekLogin::class . ':anggota, admin'])->group(function () {
+    Route::get('/kasteater', [KeuanganController::class, 'kasteater'])->name('keuangan.kasteater');
 
+    Route::get('/punishment', [PunishmentController::class, 'index'])->name('punishment.index');
+    Route::put('/kirimkarya/{id}', [PunishmentController::class, 'kirimKarya'])->name('punishment.kirim');
+});
+
+Route::middleware([CekLogin::class . ':bendahara, admin'])->group(function () {
+      Route::get('/keuangan/rekap-pdf', [KeuanganController::class, 'cetakPDF'])->name('keuangan.cetakPDF');
+
+});
+Route::middleware([CekLogin::class . ':anggota'])->group(function () {
+    Route::get('/absensaya', [KehadiranController::class, 'absenSaya'])->name('kehadiran.saya');
+
+
+});
 
 Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login');
 Route::post('/login', [AuthController::class, 'login'])->name('login');

@@ -132,10 +132,8 @@
                                 required>
                             <label for="tanggal" class="form-label">Tanggal</label>
                         </div>
-
-
-
-                        <div class="form-floating mb-3">
+                        <div class="mb-3">
+                            <label for="tanggal" class="form-label">Jenis</label>
                            <select class="form-select text-dark" name="jenis" id="jenis">
                             <option value="" disabled selected>Jenis Pemasukan</option>
                                <option class="text-dark" value="pemasukan">Pemasukan</option>
