@@ -62,6 +62,12 @@
         <span class="menu-title">Punishment</span>
       </a>
     </li>
+     <li class="nav-item">
+      <a class="nav-link {{ request()->is('rekapabsenanggota') ? 'active' : ''}}" href="/rekapabsenanggota">
+        <i class="icon-paper menu-icon"></i>
+        <span class="menu-title">Rekap Absen Anggota</span>
+      </a>
+    </li>
 
     @elseif(session('role') == 'anggota')
 

@@ -57,7 +57,7 @@ class KeuanganController extends Controller {
         if ( $role == 'anggota' ) {
             return view( 'anggota.keuangan', compact( 'keuangan' ) );
         } else {
-            return view( 'admin.keuangan', compact( 'keuangan' ) );
+            return view( 'pembina.keuangan', compact( 'keuangan' ) );
         }
 
     }

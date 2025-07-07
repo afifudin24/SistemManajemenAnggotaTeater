@@ -10,7 +10,7 @@ use Illuminate\Http\Request;
 use App\Http\Requests\StoreKehadiranRequest;
 use App\Http\Requests\UpdateKehadiranRequest;
 use Illuminate\Support\Facades\Validator;
-
+use Barryvdh\DomPDF\Facade\Pdf;
 class KehadiranController extends Controller {
     /**
     * Display a listing of the resource.
@@ -116,6 +116,51 @@ class KehadiranController extends Controller {
 
         return redirect()->back()->with( 'success', 'Data kehadiran berhasil diperbarui.' );
     }
+
+    public function rekapAbsenAnggota( Request $request ) {
+        $user = session()->get( 'user' );
+
+        // Ambil parameter bulan dari query, misal: ?bulan = 2025-07
+        $bulanQuery = $request->query( 'bulan' );
+
+        // Jika ada query bulan, gunakan itu, kalau tidak, pakai bulan sekarang
+        if ( $bulanQuery ) {
+            try {
+                $tanggal = Carbon::createFromFormat( 'Y-m', $bulanQuery );
+            } catch ( \Exception $e ) {
+                // Kalau format bulan salah, fallback ke sekarang
+                $tanggal = Carbon::now();
+            }
+        } else {
+            $tanggal = Carbon::now();
+        }
+
+        // Ambil data berdasarkan bulan tersebut
+        $kehadiran = Kehadiran::with( 'anggota' )->with( 'jadwal' )
+        ->where( 'id_pembina', $user->id_pembina )
+        ->whereYear( 'tanggal_pencatatan', $tanggal->year )
+        ->whereMonth( 'tanggal_pencatatan', $tanggal->month )
+        ->get();
+
+        return view( 'pembina.absenanggota', compact( 'kehadiran', 'tanggal' ) );
+    }
+
+    public function exportPdf(Request $request)
+{
+    $user = session()->get('user');
+    $bulanQuery = $request->query('bulan');
+    $tanggal = $bulanQuery ? Carbon::createFromFormat('Y-m', $bulanQuery) : Carbon::now();
+
+    $kehadiran = Kehadiran::with('anggota', 'jadwal')
+        ->where('id_pembina', $user->id_pembina)
+        ->whereYear('tanggal_pencatatan', $tanggal->year)
+        ->whereMonth('tanggal_pencatatan', $tanggal->month)
+        ->get();
+
+        $pdf = Pdf::loadView('pembina.rekapkehadiranpdf', compact('kehadiran', 'tanggal'))
+        ->setPaper('A4', 'landscape');
+    return $pdf->stream('rekap_kehadiran_' . $tanggal->format('Y_m') . '.pdf');
+}
 
     /**
     * Show the form for creating a new resource.

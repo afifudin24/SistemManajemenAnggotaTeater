@@ -65,6 +65,11 @@ Route::middleware([CekLogin::class . ':pembina'])->group(function () {
     Route::get('/absenanggota', [KehadiranController::class, 'index'])->name('kehadiran');
     Route::post('/absenanggota', [KehadiranController::class, 'tambahKehadiran'])->name('kehadiran.store');
     Route::put('/absenanggota', [KehadiranController::class, 'updateKehadiran'])->name('kehadiran.update');
+
+    // Rekap Absen Anggota
+    Route::get('/rekapabsenanggota', [KehadiranController::class, 'rekapAbsenAnggota'])->name('kehadiran.rekap');
+    Route::get('/rekap/pdf', [KehadiranController::class, 'exportPdf'])->name('kehadiran.rekap.pdf');
+
 });
 
 Route::middleware([CekLogin::class . ':bendahara'])->group(function () {
@@ -74,10 +79,10 @@ Route::middleware([CekLogin::class . ':bendahara'])->group(function () {
     Route::put('/updatekeuangan/{id}', [KeuanganController::class, 'update'])->name('keuangan.update');
     Route::delete('/hapuskeuangan/{id}', [KeuanganController::class, 'destroy'])->name('keuangan.destroy');
     Route::get('/rekapkas', [KeuanganController::class, 'rekap'])->name('keuangan.rekap');
-  
+
 });
 
-Route::middleware([CekLogin::class . ':anggota, admin'])->group(function () {
+Route::middleware([CekLogin::class . ':anggota,pembina'])->group(function () {
     Route::get('/kasteater', [KeuanganController::class, 'kasteater'])->name('keuangan.kasteater');
 
     Route::get('/punishment', [PunishmentController::class, 'index'])->name('punishment.index');
