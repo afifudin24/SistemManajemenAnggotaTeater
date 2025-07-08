@@ -346,4 +346,170 @@ class UserController extends Controller {
         return view( 'admin.user.profil' );
     }
 
+    public function updateprofilbendahara( Request $request ) {
+
+        // Validasi input
+        $request->validate( [
+            'nama' => 'required|string|max:255',
+            'username' => 'required|string|max:20',
+            'periode' =>    'required|string|max:20',
+        ], [
+            'nama.required' => 'Nama wajib diisi.',
+            'nama.string' => 'Nama harus berupa teks.',
+            'nama.max' => 'Nama tidak boleh lebih dari 255 karakter.',
+
+            'periode.required' => 'Periode wajib diisi.',
+            'periode.string' => 'Periode harus berupa teks.',
+            'periode.max' => 'Periode tidak boleh lebih dari 20 karakter.',
+
+            'username.required' => 'Username wajib diisi.',
+            'username.string' => 'Username harus berupa teks.',
+            'username.max' => 'Username tidak boleh lebih dari 20 karakter.',
+        ] );
+
+        // Simpan data admin
+        $user = session()->get( 'user' );
+        $bendahara = Bendahara::find( $user->id_bendahara );
+        // dd( $pembina );
+        $bendahara->nama = $request->nama;
+
+        $bendahara->username = $request->username;
+        $bendahara->periode = $request->periode;
+
+        if($request->password != '' || $request->password != null) {
+            $bendahara->password = bcrypt( $request->password );
+        }
+
+        $bendahara->save();
+        // update juga sessionuser nya
+        session()->put( 'user', $bendahara );
+
+        return redirect()->route( 'profil' )->with( 'success', 'Profil berhasil diupdate.' );
+    }
+
+    public function updateprofilpembina( Request $request ) {
+
+        // Validasi input
+        $request->validate( [
+            'nama' => 'required|string|max:255',
+            'username' => 'required|string|max:20',
+            'nip' =>    'required|string|max:20',
+        ], [
+            'nama.required' => 'Nama wajib diisi.',
+            'nama.string' => 'Nama harus berupa teks.',
+            'nama.max' => 'Nama tidak boleh lebih dari 255 karakter.',
+
+            'nip.required' => 'NIP wajib diisi.',
+            'nip.string' => 'NIP harus berupa teks.',
+            'nip.max' => 'NIP tidak boleh lebih dari 20 karakter.',
+
+            'username.required' => 'Username wajib diisi.',
+            'username.string' => 'Username harus berupa teks.',
+            'username.max' => 'Username tidak boleh lebih dari 20 karakter.',
+        ] );
+
+        // Simpan data admin
+        $user = session()->get( 'user' );
+        $pembina = Pembina::find( $user->id_pembina );
+        // dd( $pembina );
+        $pembina->nama = $request->nama;
+
+        $pembina->username = $request->username;
+        $pembina->nip = $request->nip;
+
+        if($request->password != '' || $request->password != null) {
+            $pembina->password = bcrypt( $request->password );
+        }
+
+        $pembina->save();
+        // update juga sessionuser nya
+        session()->put( 'user', $pembina );
+
+        return redirect()->route( 'profil' )->with( 'success', 'Profil berhasil diupdate.' );
+    }
+
+
+    public function updateprofilanggota( Request $request ) {
+
+        // Validasi input
+        $request->validate( [
+            'nama' => 'required|string|max:255',
+            'username' => 'required|string|max:20',
+
+        ], [
+            'nama.required' => 'Nama wajib diisi.',
+            'nama.string' => 'Nama harus berupa teks.',
+            'nama.max' => 'Nama tidak boleh lebih dari 255 karakter.',
+
+            'periode.required' => 'Periode wajib diisi.',
+            'periode.string' => 'Periode harus berupa teks.',
+            'periode.max' => 'Periode tidak boleh lebih dari 20 karakter.',
+
+            'username.required' => 'Username wajib diisi.',
+            'username.string' => 'Username harus berupa teks.',
+            'username.max' => 'Username tidak boleh lebih dari 20 karakter.',
+        ] );
+
+        // Simpan data admin
+        $user = session()->get( 'user' );
+        $anggota = Anggota::find( $user->id_anggota );
+        // dd( $pembina );
+        $anggota->nama = $request->nama;
+
+        $anggota->username = $request->username;
+
+
+        if($request->password != '' || $request->password != null) {
+            $anggota->password = bcrypt( $request->password );
+        }
+
+        $anggota->save();
+        // update juga sessionuser nya
+        session()->put( 'user', $anggota );
+
+        return redirect()->route( 'profil' )->with( 'success', 'Profil berhasil diupdate.' );
+    }
+
+    public function updateprofiladmin( Request $request ) {
+
+        // Validasi input
+        $request->validate( [
+            'nama' => 'required|string|max:255',
+            'username' => 'required|string|max:20',
+
+
+        ], [
+            'nama.required' => 'Nama wajib diisi.',
+            'nama.string' => 'Nama harus berupa teks.',
+            'nama.max' => 'Nama tidak boleh lebih dari 255 karakter.',
+
+            'periode.required' => 'Periode wajib diisi.',
+            'periode.string' => 'Periode harus berupa teks.',
+            'periode.max' => 'Periode tidak boleh lebih dari 20 karakter.',
+
+            'username.required' => 'Username wajib diisi.',
+            'username.string' => 'Username harus berupa teks.',
+            'username.max' => 'Username tidak boleh lebih dari 20 karakter.',
+        ] );
+
+        // Simpan data admin
+        $user = session()->get( 'user' );
+        $admin = Admin::find( $user->admin_id );
+        // dd( $pembina );
+        $admin->admin_name = $request->nama;
+
+        $admin->username = $request->username;
+
+
+        if($request->password != '' || $request->password != null) {
+            $admin->password = bcrypt( $request->password );
+        }
+
+        $admin->save();
+        // update juga sessionuser nya
+        session()->put( 'user', $admin );
+
+        return redirect()->route( 'profil' )->with( 'success', 'Profil berhasil diupdate.' );
+    }
+
 }

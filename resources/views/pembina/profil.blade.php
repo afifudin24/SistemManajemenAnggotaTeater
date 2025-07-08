@@ -6,21 +6,37 @@
                 <div class="row">
                   <div class="col-12 col-xl-8 mb-4 mb-xl-0">
                     <h3 class="font-weight-bold">Profil Saya</h3>
-                   
+
                   </div>
                   <div class="col-12 col-xl-4">
                     <div class="justify-content-end d-flex">
-                      
+
                     </div>
                   </div>
                 </div>
               </div>
             </div>
+            <!-- kasih alert jika succes dan error jika ada error -->
+
             <div class="row">
               <div class="col-md-6 col-12 p-3 card">
+              @if ($errors->any())
+    <div class="alert alert-danger">
+        <ul class="mb-0">
+            @foreach ($errors->all() as $error)
+                <li>{{ $error }}</li>
+            @endforeach
+        </ul>
+    </div>
+@endif
+
+@if (session('success'))
+    <div class="alert alert-success">
+        {{ session('success') }}
+    </div>
+@endif
                  <form id="formUpdateUser" action="/updateprofilpembina" method="POST">
                 @csrf
-                @method('PUT')
                 <div class="row">
                   <div class="col-6">
                        <div class="form-floating mb-3">
@@ -36,7 +52,7 @@
                   </div>
                <div class="col-6">
                     <div class="form-floating mb-3">
-                       <input type="text" class="form-control" name="nama" value="{{session('user')->nip}}" id="nip"
+                       <input type="text" class="form-control" name="nip" value="{{session('user')->nip}}" id="nip"
                                 placeholder="NIP" required>
                             <label for="nip" class="form-label">NIP</label>
                </div>
@@ -47,7 +63,7 @@
 <!-- Input Password, disembunyikan awalnya -->
 <div class="form-floating mb-3" id="inputPasswordContainer" style="display: none;">
   <input type="password" class="form-control" name="password" id="password"
-         placeholder="Klik untuk ganti password" required>
+         placeholder="Klik untuk ganti password">
   <label for="password" class="form-label">Password</label>
 </div>
                </div>
@@ -55,12 +71,12 @@
                    <button type="submit" class="btn btn-primary">Simpan</button>
                </div>
                   </div>
-                
-            
-              
+
+
+
             </form>
               </div>
-           
+
             </div>
 
             <div class="modal fade" id="gantiPasswordModal" tabindex="-1" aria-labelledby="logoutModalLabel" aria-hidden="true">
@@ -80,11 +96,11 @@
     </div>
   </div>
 </div>
-          
-          
-           
+
+
+
           {{-- </div> --}}
-         
+
         </div>
 
         @push('scripts')
@@ -99,6 +115,6 @@
 </script>
 
         @endpush
-        
-          
+
+
 @endsection

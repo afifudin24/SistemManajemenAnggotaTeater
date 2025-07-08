@@ -50,6 +50,9 @@ Route::middleware([CekLogin::class . ':admin'])->group(function () {
     Route::post('/tambahbendahara', [UserController::class, 'tambahBendahara'])->name('bendahara.store');
     Route::put('/updatebendahara/{id}', [UserController::class, 'updateBendahara'])->name('bendahara.update');
     Route::delete('/hapusbendahara/{id}', [UserController::class, 'hapusBendahara'])->name('bendahara.delete');
+
+    // profil
+    Route::post('/updateprofiladmin', [UserController::class, 'updateprofiladmin'])->name('profil.updateadmin');
 });
 
 Route::middleware([CekLogin::class . ':pembina,anggota'])->group(function () {
@@ -75,6 +78,9 @@ Route::middleware([CekLogin::class . ':pembina'])->group(function () {
     // update status punishment
     Route::put('/updatestatuspunishment/{id}', [PunishmentController::class, 'updatePunishment'])->name('punishment.update');
 
+    // update profil
+    Route::post('/updateprofilpembina', [UserController::class, 'updateprofilpembina'])->name('profil.updateadmin');
+
 });
 
 Route::middleware([CekLogin::class . ':bendahara'])->group(function () {
@@ -84,6 +90,9 @@ Route::middleware([CekLogin::class . ':bendahara'])->group(function () {
     Route::put('/updatekeuangan/{id}', [KeuanganController::class, 'update'])->name('keuangan.update');
     Route::delete('/hapuskeuangan/{id}', [KeuanganController::class, 'destroy'])->name('keuangan.destroy');
     Route::get('/rekapkas', [KeuanganController::class, 'rekap'])->name('keuangan.rekap');
+
+    // update profil
+      Route::post('/updateprofilbendahara', [UserController::class, 'updateprofilbendahara'])->name('profil.updatebendahara');
 
 });
 
@@ -100,6 +109,9 @@ Route::middleware([CekLogin::class . ':bendahara, admin'])->group(function () {
 });
 Route::middleware([CekLogin::class . ':anggota'])->group(function () {
     Route::get('/absensaya', [KehadiranController::class, 'absenSaya'])->name('kehadiran.saya');
+
+     // update profil
+     Route::post('/updateprofilanggota', [UserController::class, 'updateprofilanggota'])->name('profil.updateanggota');
 
 
 });
