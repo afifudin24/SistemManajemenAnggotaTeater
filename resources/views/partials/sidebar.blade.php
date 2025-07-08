@@ -63,7 +63,7 @@
       </a>
     </li>
      <li class="nav-item">
-      <a class="nav-link {{ request()->is('rekapabsenanggota') ? 'active' : ''}}" href="/rekapabsenanggota">
+      <a class="nav-link {{ request()->is('rekapabsen') ? 'active' : ''}}" href="/rekapabsen">
         <i class="icon-paper menu-icon"></i>
         <span class="menu-title">Rekap Absen Anggota</span>
       </a>

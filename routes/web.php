@@ -21,6 +21,8 @@ Route::get('/', function () {
 // });
 Route::middleware([CekLogin::class])->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+
+    Route::get('/profil', [UserController::class, 'profil'])->name('profil');
 });
 
 Route::middleware([CekLogin::class . ':admin'])->group(function () {
@@ -67,8 +69,11 @@ Route::middleware([CekLogin::class . ':pembina'])->group(function () {
     Route::put('/absenanggota', [KehadiranController::class, 'updateKehadiran'])->name('kehadiran.update');
 
     // Rekap Absen Anggota
-    Route::get('/rekapabsenanggota', [KehadiranController::class, 'rekapAbsenAnggota'])->name('kehadiran.rekap');
+    Route::get('/rekapabsen', [KehadiranController::class, 'rekapAbsenAnggota'])->name('kehadiran.rekap');
     Route::get('/rekap/pdf', [KehadiranController::class, 'exportPdf'])->name('kehadiran.rekap.pdf');
+
+    // update status punishment
+    Route::put('/updatestatuspunishment/{id}', [PunishmentController::class, 'updatePunishment'])->name('punishment.update');
 
 });
 

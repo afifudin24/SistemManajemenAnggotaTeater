@@ -15,8 +15,15 @@ class PunishmentController extends Controller {
 
     public function index() {
         $user = session()->get( 'user' );
-        $punishment = Punishment::where( 'id_anggota', $user->id_anggota )->paginate( 10 );
-        return view( 'anggota.punishment', compact( 'punishment' ) );
+        $role = session()->get( 'role' );
+        if ( $role == 'pembina' ) {
+            $punishment = Punishment::with( 'anggota' )->where( 'id_pembina', $user->id_pembina )->paginate( 10 );
+            $view = 'pembina.punishment';
+        } else {
+            $punishment = Punishment::where( 'id_anggota', $user->id_anggota )->paginate( 10 );
+            $view = 'anggota.punishment';
+        }
+        return view( $view, compact( 'punishment' ) );
     }
 
     public function kirimKarya( Request $request, $id ) {
@@ -45,6 +52,19 @@ class PunishmentController extends Controller {
         }
 
         return redirect()->route( 'punishment.index' )->with( 'success', $message );
+    }
+
+    public function updatePunishment( Request $request, $id ) {
+        $punishment = Punishment::findOrFail( $id );
+        if ( $request->status_punishment == 'Perlu Upload Karya' ) {
+            // hapus data karya
+            Storage::disk( 'public' )->delete( $punishment->karya );
+            $punishment->karya = null;
+
+        }
+        $punishment->status_punishment = $request->status_punishment;
+        $punishment->save();
+        return redirect()->route( 'punishment.index' )->with( 'success', 'Status punishment berhasil diperbarui' );
     }
 
     /**

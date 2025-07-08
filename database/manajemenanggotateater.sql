@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Waktu pembuatan: 03 Jul 2025 pada 10.56
+-- Waktu pembuatan: 08 Jul 2025 pada 11.07
 -- Versi server: 10.4.32-MariaDB
 -- Versi PHP: 8.2.12
 
@@ -41,11 +41,10 @@ CREATE TABLE `admin` (
 --
 
 INSERT INTO `admin` (`admin_id`, `admin_name`, `username`, `password`, `status`, `last_login`) VALUES
-(1, 'Admin Utama', 'admin1', '$2y$12$KxpQj2UtticdvCSxLnBisumzmBHMscNh64MPodRp8pYl58yIn0kiu', 1, '2025-07-03 01:56:35'),
+(1, 'Jos banget', 'admin1', '$2y$12$KxpQj2UtticdvCSxLnBisumzmBHMscNh64MPodRp8pYl58yIn0kiu', 1, '2025-07-03 01:56:35'),
 (2, 'Admin Kedua', 'admin2', '$2y$12$GN5LGnDrM6.qutMByd8pBOgrpsjP7WvQfrl0l65lVzENFrMPS6Qwm', 1, '2025-07-03 01:56:36'),
 (3, 'Admin Tiga', 'admin3', '$2y$12$qdLaMKTZfmDAh/bvJVffjOJB362kk9SLzj8dmrfxpDTX6lnKpU0.W', 1, '2025-07-03 01:56:36'),
-(4, 'awaw', 'awaw', '$2y$12$ry8poMc0QXXXia52zG3xb.UyM3fckZz1SPcDC/pP3Szp..WgTVkiu', 0, '2025-07-03 15:52:55'),
-(5, 'Kocak Banget', 'kocakbanget', '$2y$12$ypnAJNFIu4y/zw6x0/WlxupT4WMVqPALxrDdwvo1Pfmya4clOfUUK', 0, '2025-07-03 15:53:43');
+(4, 'awaw', 'awaw', '$2y$12$ry8poMc0QXXXia52zG3xb.UyM3fckZz1SPcDC/pP3Szp..WgTVkiu', 0, '2025-07-03 15:52:55');
 
 -- --------------------------------------------------------
 
@@ -69,9 +68,9 @@ CREATE TABLE `anggota` (
 --
 
 INSERT INTO `anggota` (`id_anggota`, `id_pembina`, `nama`, `username`, `password`, `nis`, `kelas`, `status`) VALUES
-(1, 1, 'Anggota Satu', 'anggota1', '$2y$12$JybVBRLa8Ivbp9pTs4zxaux6DwySZkV/EbsA5qKhGePuZV8katlcK', '1234567890', '10A', 1),
-(2, 1, 'Anggota Dua', 'anggota2', '$2y$12$LWtDhKtDNobkL/oKfW3gyOCO93fKAFjtHesF1YE5iIZmvnxL7w1si', '1234567891', '10B', 1),
-(3, 2, 'Anggota Tiga', 'anggota3', '$2y$12$QGY832Ok53SmDwA7MRnIxOQvh72OYv8n8J2jhuHAQDI8pa0GBrQDC', '1234567892', '10C', 1);
+(1, 1, 'Anggota Satu', 'anggota1', '$2y$12$JybVBRLa8Ivbp9pTs4zxaux6DwySZkV/EbsA5qKhGePuZV8katlcK', '1234567890', '10', 1),
+(2, 1, 'Anggota Dua', 'anggota2', '$2y$12$LWtDhKtDNobkL/oKfW3gyOCO93fKAFjtHesF1YE5iIZmvnxL7w1si', '1234567891', '11', 1),
+(3, 2, 'Anggota Tiga', 'anggota3', '$2y$12$QGY832Ok53SmDwA7MRnIxOQvh72OYv8n8J2jhuHAQDI8pa0GBrQDC', '1234567892', '12', 1);
 
 -- --------------------------------------------------------
 
@@ -93,7 +92,7 @@ CREATE TABLE `bendahara` (
 --
 
 INSERT INTO `bendahara` (`id_bendahara`, `nama`, `username`, `password`, `periode`, `status`) VALUES
-(1, 'Bendahara Satu', 'bendahara1', '$2y$12$/xl0A97YzYd2vPUMmjyd2ecUUvn3/lyFSow/VgTEfU5Uy5ghjGXma', '2023/2024', 1),
+(1, 'Bendahara Nich', 'bendahara1', '$2y$12$/xl0A97YzYd2vPUMmjyd2ecUUvn3/lyFSow/VgTEfU5Uy5ghjGXma', '2023/2024', 1),
 (2, 'Bendahara Dua', 'bendahara2', '$2y$12$YO3RmuLJbhKQcEe7h2x0nOvxTNiGSLZMix4PdMeCZ8ioVhUgdefAe', '2024/2025', 1),
 (3, 'Bendahara Tiga', 'bendahara3', '$2y$12$LsahBj8VOzqCWH9QX845q.D0kfmx/QRuHgSXvvaCBUNA3l5PzQc2i', '2025/2026', 1);
 
@@ -153,6 +152,13 @@ CREATE TABLE `jadwal` (
   `lokasi` varchar(50) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+--
+-- Dumping data untuk tabel `jadwal`
+--
+
+INSERT INTO `jadwal` (`id_jadwal`, `id_pembina`, `kegiatan`, `tanggal`, `waktu_mulai`, `waktu_selesai`, `lokasi`) VALUES
+(1, 1, 'Main main aja ook', '2025-07-05', '10:00:00', '12:00:00', 'Sini aja');
+
 -- --------------------------------------------------------
 
 --
@@ -198,9 +204,19 @@ CREATE TABLE `kehadiran` (
   `id_kehadiran` bigint(20) UNSIGNED NOT NULL,
   `id_jadwal` bigint(20) UNSIGNED NOT NULL,
   `id_anggota` bigint(20) UNSIGNED NOT NULL,
-  `waktu_pencatatan` datetime NOT NULL,
+  `id_pembina` bigint(11) UNSIGNED NOT NULL,
+  `tanggal_pencatatan` date NOT NULL,
+  `status_kehadiran` enum('Hadir','Sakit','Izin','Alpha') NOT NULL,
   `catatan` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data untuk tabel `kehadiran`
+--
+
+INSERT INTO `kehadiran` (`id_kehadiran`, `id_jadwal`, `id_anggota`, `id_pembina`, `tanggal_pencatatan`, `status_kehadiran`, `catatan`) VALUES
+(3, 1, 1, 1, '2025-07-05', 'Hadir', 'Isi aja nih'),
+(4, 1, 2, 1, '2025-07-05', 'Sakit', 'Isi aja nih');
 
 -- --------------------------------------------------------
 
@@ -217,6 +233,13 @@ CREATE TABLE `keuangan` (
   `keterangan` text NOT NULL,
   `bukti_transaksi` varchar(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data untuk tabel `keuangan`
+--
+
+INSERT INTO `keuangan` (`id_transaksi`, `id_bendahara`, `jenis`, `tanggal`, `jumlah`, `keterangan`, `bukti_transaksi`) VALUES
+(1, 1, 'pemasukan', '2025-07-08', 100000.00, 'Iseng aja nih', 'bukti_keuangan/Tpk9vjVx1bAS1x8I1808FRao0wNBfCesD3t9Hssi.png');
 
 -- --------------------------------------------------------
 
@@ -296,7 +319,29 @@ CREATE TABLE `pembina` (
 INSERT INTO `pembina` (`id_pembina`, `nama`, `username`, `password`, `nip`, `status`) VALUES
 (1, 'Pembina Satu', 'pembina1', '$2y$12$NK46E0ng9fRVMVH3nzlHfOmMF.aL4IW9puChcgM22PNLFEXHvWFB.', '1985010110010001', 1),
 (2, 'Pembina Dua', 'pembina2', '$2y$12$UT0mCJ/k6u4nZpT.c1Wbo.2a73ot32q6eQJWHTvKFoUbf9UHI2h1q', '1985020210020002', 1),
-(3, 'Pembina Tiga', 'pembina3', '$2y$12$QUHTEwOZANidcteCSLGvw.Cu6qEetGD0HIdwt24a9T06RYhxOPqB.', '1985030310030003', 1);
+(3, 'Jos', 'pembina3', '$2y$12$BzV9PWujwFILCCRAbV4wpODrRSOL3TN2laOm7CCwiKbmA2EcGeILS', '1985030310030003', 1);
+
+-- --------------------------------------------------------
+
+--
+-- Struktur dari tabel `punishment`
+--
+
+CREATE TABLE `punishment` (
+  `id_punishment` bigint(11) UNSIGNED NOT NULL,
+  `id_anggota` bigint(11) UNSIGNED NOT NULL,
+  `id_pembina` bigint(11) UNSIGNED NOT NULL,
+  `tanggal` date NOT NULL,
+  `status_punishment` enum('Menunggu Konfirmasi','Diterima','Ditolak','Perlu Upload Karya') NOT NULL DEFAULT 'Perlu Upload Karya',
+  `karya` varchar(255) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data untuk tabel `punishment`
+--
+
+INSERT INTO `punishment` (`id_punishment`, `id_anggota`, `id_pembina`, `tanggal`, `status_punishment`, `karya`) VALUES
+(1, 1, 1, '2025-07-07', 'Perlu Upload Karya', 'karya/SUZshSbxG6fGT1dxsS2LQf9bsGfj0mD5frmJxiZd.jpg');
 
 -- --------------------------------------------------------
 
@@ -318,7 +363,7 @@ CREATE TABLE `sessions` (
 --
 
 INSERT INTO `sessions` (`id`, `user_id`, `ip_address`, `user_agent`, `payload`, `last_activity`) VALUES
-('reGuuDPNa3Ts8HmhHoSYnFAS2aGHFULiS6EKUOsr', NULL, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 Safari/537.36 Edg/138.0.0.0', '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', 1751532823);
+('3gU6vVTa13TQevxqKtKODSHcvwIYEQN3MKkpyTQK', NULL, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Safari/537.36', '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', 1751964902);
 
 -- --------------------------------------------------------
 
@@ -405,7 +450,8 @@ ALTER TABLE `job_batches`
 ALTER TABLE `kehadiran`
   ADD PRIMARY KEY (`id_kehadiran`),
   ADD KEY `kehadiran_id_jadwal_foreign` (`id_jadwal`),
-  ADD KEY `kehadiran_id_anggota_foreign` (`id_anggota`);
+  ADD KEY `kehadiran_id_anggota_foreign` (`id_anggota`),
+  ADD KEY `kehadiran_id_pembina` (`id_pembina`);
 
 --
 -- Indeks untuk tabel `keuangan`
@@ -439,6 +485,14 @@ ALTER TABLE `pembina`
   ADD PRIMARY KEY (`id_pembina`);
 
 --
+-- Indeks untuk tabel `punishment`
+--
+ALTER TABLE `punishment`
+  ADD PRIMARY KEY (`id_punishment`),
+  ADD KEY `anggota` (`id_anggota`),
+  ADD KEY `id_pembina` (`id_pembina`);
+
+--
 -- Indeks untuk tabel `sessions`
 --
 ALTER TABLE `sessions`
@@ -467,13 +521,13 @@ ALTER TABLE `admin`
 -- AUTO_INCREMENT untuk tabel `anggota`
 --
 ALTER TABLE `anggota`
-  MODIFY `id_anggota` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id_anggota` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT untuk tabel `bendahara`
 --
 ALTER TABLE `bendahara`
-  MODIFY `id_bendahara` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id_bendahara` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT untuk tabel `failed_jobs`
@@ -485,7 +539,7 @@ ALTER TABLE `failed_jobs`
 -- AUTO_INCREMENT untuk tabel `jadwal`
 --
 ALTER TABLE `jadwal`
-  MODIFY `id_jadwal` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id_jadwal` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT untuk tabel `jobs`
@@ -497,13 +551,13 @@ ALTER TABLE `jobs`
 -- AUTO_INCREMENT untuk tabel `kehadiran`
 --
 ALTER TABLE `kehadiran`
-  MODIFY `id_kehadiran` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id_kehadiran` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT untuk tabel `keuangan`
 --
 ALTER TABLE `keuangan`
-  MODIFY `id_transaksi` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id_transaksi` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT untuk tabel `log_aktifitas`
@@ -521,7 +575,7 @@ ALTER TABLE `migrations`
 -- AUTO_INCREMENT untuk tabel `pembina`
 --
 ALTER TABLE `pembina`
-  MODIFY `id_pembina` bigint(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id_pembina` bigint(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT untuk tabel `users`
@@ -550,13 +604,21 @@ ALTER TABLE `jadwal`
 --
 ALTER TABLE `kehadiran`
   ADD CONSTRAINT `kehadiran_id_anggota_foreign` FOREIGN KEY (`id_anggota`) REFERENCES `anggota` (`id_anggota`) ON DELETE CASCADE,
-  ADD CONSTRAINT `kehadiran_id_jadwal_foreign` FOREIGN KEY (`id_jadwal`) REFERENCES `jadwal` (`id_jadwal`) ON DELETE CASCADE;
+  ADD CONSTRAINT `kehadiran_id_jadwal_foreign` FOREIGN KEY (`id_jadwal`) REFERENCES `jadwal` (`id_jadwal`) ON DELETE CASCADE,
+  ADD CONSTRAINT `kehadiran_id_pembina` FOREIGN KEY (`id_pembina`) REFERENCES `pembina` (`id_pembina`) ON DELETE CASCADE;
 
 --
 -- Ketidakleluasaan untuk tabel `keuangan`
 --
 ALTER TABLE `keuangan`
   ADD CONSTRAINT `keuangan_id_bendahara_foreign` FOREIGN KEY (`id_bendahara`) REFERENCES `bendahara` (`id_bendahara`) ON DELETE CASCADE;
+
+--
+-- Ketidakleluasaan untuk tabel `punishment`
+--
+ALTER TABLE `punishment`
+  ADD CONSTRAINT `anggota` FOREIGN KEY (`id_anggota`) REFERENCES `anggota` (`id_anggota`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `punishment_ibfk_1` FOREIGN KEY (`id_pembina`) REFERENCES `pembina` (`id_pembina`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

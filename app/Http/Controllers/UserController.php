@@ -326,4 +326,24 @@ class UserController extends Controller {
         return redirect()->route( 'pembina' )->with( 'success', 'Pembina berhasil dihapus.' );
     }
 
+    public function profil() {
+        $user = session()->get( 'user' );
+        $role = session()->get( 'role' );
+        if ( $role == 'pembina' ) {
+            $pembina = Pembina::find( $user->id_pembina );
+            return view( 'pembina.profil', compact( 'pembina' ) );
+        } else if ( $role == 'anggota' ) {
+            $anggota = Anggota::find( $user->id_anggota );
+            return view( 'anggota.profil', compact( 'anggota' ) );
+        } else if ( $role == 'bendahara' ) {
+            $bendahara = Bendahara::find( $user->id_bendahara );
+            return view( 'bendahara.profil', compact( 'bendahara' ) );
+        } else if ( $role == 'admin' ) {
+            $admin = Admin::find( $user->id_admin );
+            return view( 'admin.profil', compact( 'admin' ) );
+        }
+
+        return view( 'admin.user.profil' );
+    }
+
 }

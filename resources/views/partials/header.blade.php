@@ -94,9 +94,9 @@
            @endif
         </a>
         <div class="dropdown-menu dropdown-menu-right navbar-dropdown" aria-labelledby="profileDropdown">
-          <a class="dropdown-item">
-            <i class="ti-settings text-primary"></i> Settings </a>
-            <a href="#" class="dropdown-item" data-bs-toggle="modal" data-bs-target="#logoutModal">
+          <a class="dropdown-item" href="/profil">
+            <i class="ti-user text-primary"></i> Profil </a>
+            <a href="" class="dropdown-item" data-bs-toggle="modal" data-bs-target="#logoutModal">
   <i class="ti-power-off text-primary"></i> Logout
 </a>
 

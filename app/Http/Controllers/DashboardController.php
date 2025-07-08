@@ -24,7 +24,11 @@ class DashboardController extends Controller {
             $anggota = Anggota::where( 'status', '1' )->count();
             return view( 'admin.dashboard', compact( 'admin', 'pembina', 'bendahara', 'anggota' ) );
         } elseif ( $role == 'pembina' ) {
-            return view( 'pembina.dashboard' );
+            $totalanggota = Anggota::where( 'id_pembina', $user->id_pembina )->count();
+            $totaljadwal = Jadwal::where( 'id_pembina', $user->id_pembina )->count();
+            $totalpunishment = Punishment::where( 'id_pembina', $user->id_pembina )->count();
+            $totalkehadiran = Kehadiran::where( 'id_pembina', $user->id_pembina )->count();
+            return view( 'pembina.dashboard', compact( 'totalanggota', 'totaljadwal', 'totalpunishment', 'totalkehadiran' ) );
         } elseif ( $role == 'bendahara' ) {
             $bulanIni = date( 'm' );
             $pemasukan = Keuangan::where( 'jenis', 'pemasukan' )->whereMonth( 'tanggal', $bulanIni )->sum( 'jumlah' );
