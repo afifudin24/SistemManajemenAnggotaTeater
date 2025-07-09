@@ -24,13 +24,22 @@
       </div>
     </li>
     <li class="nav-item">
-      <a class="nav-link {{ request()->is('rekaplaporanabsensi') ? 'active' : ''}}" href="/rekaplaporanabsensi">
-        <i class="icon-paper menu-icon"></i>
-        <span class="menu-title">Rekap  Absensi</span>
+      <a class="nav-link" data-bs-toggle="collapse" href="#ui-basic2" aria-expanded="false" aria-controls="ui-basic">
+       <i class="icon-paper menu-icon"></i>
+
+        <span class="menu-title">Rekap Absen</span>
+        <i class="menu-arrow"></i>
       </a>
+      <div class="collapse" id="ui-basic2">
+        <ul class="nav flex-column sub-menu">
+            @foreach($datapembina as $item)
+          <li class="nav-item"> <a class="nav-link" href="/adminrekapabsen/{{$item->id_pembina}}">{{$item->nama}}</a></li>
+          @endforeach
+        </ul>
+      </div>
     </li>
     <li class="nav-item">
-      <a class="nav-link {{ request()->is('rekaplaporankeuangan') ? 'active' : ''}}" href="/rekaplaporankeuangan">
+    <a class="nav-link {{ request()->is('rekapkas') ? 'active' : ''}}" href="/rekapkas">
         <i class="icon-paper menu-icon"></i>
         <span class="menu-title">Rekap Keuangan</span>
       </a>

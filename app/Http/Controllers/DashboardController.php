@@ -22,7 +22,8 @@ class DashboardController extends Controller {
             $pembina = Pembina::where( 'status', '1' )->count();
             $bendahara = Bendahara::where( 'status', '1' )->count();
             $anggota = Anggota::where( 'status', '1' )->count();
-            return view( 'admin.dashboard', compact( 'admin', 'pembina', 'bendahara', 'anggota' ) );
+            $datapembina = Pembina::where( 'status', '1' )->get();
+            return view( 'admin.dashboard', compact( 'admin', 'pembina', 'datapembina',  'bendahara', 'anggota' ) );
         } elseif ( $role == 'pembina' ) {
             $totalanggota = Anggota::where( 'id_pembina', $user->id_pembina )->count();
             $totaljadwal = Jadwal::where( 'id_pembina', $user->id_pembina )->count();

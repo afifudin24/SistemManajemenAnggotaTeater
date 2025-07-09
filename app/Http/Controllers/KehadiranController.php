@@ -6,6 +6,7 @@ use Carbon\Carbon;
 use App\Models\Kehadiran;
 use App\Models\Jadwal;
 use App\Models\Anggota;
+use App\Models\Pembina;
 use Illuminate\Http\Request;
 use App\Http\Requests\StoreKehadiranRequest;
 use App\Http\Requests\UpdateKehadiranRequest;
@@ -145,6 +146,33 @@ class KehadiranController extends Controller {
         return view( 'pembina.absenanggota', compact( 'kehadiran', 'tanggal' ) );
     }
 
+    public function adminRekapAbsenAnggota( Request $request, $id_pembina ) {
+
+        // Ambil parameter bulan dari query, misal: ?bulan = 2025-07
+        $bulanQuery = $request->query( 'bulan' );
+
+        // Jika ada query bulan, gunakan itu, kalau tidak, pakai bulan sekarang
+        if ( $bulanQuery ) {
+            try {
+                $tanggal = Carbon::createFromFormat( 'Y-m', $bulanQuery );
+            } catch ( \Exception $e ) {
+                // Kalau format bulan salah, fallback ke sekarang
+                $tanggal = Carbon::now();
+            }
+        } else {
+            $tanggal = Carbon::now();
+        }
+        $id_pembina = $id_pembina;
+        // Ambil data berdasarkan bulan tersebut
+        $kehadiran = Kehadiran::with( 'anggota' )->with( 'jadwal' )
+        ->where( 'id_pembina', $id_pembina )
+        ->whereYear( 'tanggal_pencatatan', $tanggal->year )
+        ->whereMonth( 'tanggal_pencatatan', $tanggal->month )
+        ->get();
+
+        return view( 'admin.absenanggota', compact( 'kehadiran', 'id_pembina',  'tanggal' ) );
+    }
+
     public function exportPdf(Request $request)
 {
     $user = session()->get('user');
@@ -158,6 +186,23 @@ class KehadiranController extends Controller {
         ->get();
 
         $pdf = Pdf::loadView('pembina.rekapkehadiranpdf', compact('kehadiran', 'tanggal'))
+        ->setPaper('A4', 'landscape');
+    return $pdf->stream('rekap_kehadiran_' . $tanggal->format('Y_m') . '.pdf');
+}
+
+public function adminExportPdf($id_pembina, Request $request)
+{
+    $user = session()->get('user');
+    $bulanQuery = $request->query('bulan');
+    $tanggal = $bulanQuery ? Carbon::createFromFormat('Y-m', $bulanQuery) : Carbon::now();
+    $pembina = Pembina::find($id_pembina);
+    $kehadiran = Kehadiran::with('anggota', 'jadwal')
+        ->where('id_pembina', $id_pembina)
+        ->whereYear('tanggal_pencatatan', $tanggal->year)
+        ->whereMonth('tanggal_pencatatan', $tanggal->month)
+        ->get();
+
+        $pdf = Pdf::loadView('admin.rekapkehadiranpdf', compact('kehadiran', 'tanggal', 'pembina'))
         ->setPaper('A4', 'landscape');
     return $pdf->stream('rekap_kehadiran_' . $tanggal->format('Y_m') . '.pdf');
 }

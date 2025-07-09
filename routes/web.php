@@ -53,6 +53,10 @@ Route::middleware([CekLogin::class . ':admin'])->group(function () {
 
     // profil
     Route::post('/updateprofiladmin', [UserController::class, 'updateprofiladmin'])->name('profil.updateadmin');
+
+    // rekap absen
+    Route::get('/adminrekapabsen/{id_pembina}', [KehadiranController::class, 'adminRekapAbsenAnggota'])->name('kehadiran.rekap');
+    Route::get('/adminrekap/pdf/{id_pembina}', [KehadiranController::class, 'adminExportPdf'])->name('adminkehadiran.rekap.pdf');
 });
 
 Route::middleware([CekLogin::class . ':pembina,anggota'])->group(function () {
@@ -71,9 +75,7 @@ Route::middleware([CekLogin::class . ':pembina'])->group(function () {
     Route::post('/absenanggota', [KehadiranController::class, 'tambahKehadiran'])->name('kehadiran.store');
     Route::put('/absenanggota', [KehadiranController::class, 'updateKehadiran'])->name('kehadiran.update');
 
-    // Rekap Absen Anggota
-    Route::get('/rekapabsen', [KehadiranController::class, 'rekapAbsenAnggota'])->name('kehadiran.rekap');
-    Route::get('/rekap/pdf', [KehadiranController::class, 'exportPdf'])->name('kehadiran.rekap.pdf');
+
 
     // update status punishment
     Route::put('/updatestatuspunishment/{id}', [PunishmentController::class, 'updatePunishment'])->name('punishment.update');
@@ -83,13 +85,19 @@ Route::middleware([CekLogin::class . ':pembina'])->group(function () {
 
 });
 
+Route::middleware([CekLogin::class . ':pembina,admin'])->group(function () {
+     // Rekap Absen Anggota
+    Route::get('/rekapabsen', [KehadiranController::class, 'rekapAbsenAnggota'])->name('kehadiran.rekap');
+    Route::get('/rekap/pdf', [KehadiranController::class, 'exportPdf'])->name('kehadiran.rekap.pdf');
+});
+
 Route::middleware([CekLogin::class . ':bendahara'])->group(function () {
     // Kelola Keuangan
     Route::get('/keuangan', [KeuanganController::class, 'index'])->name('keuangan.index');
     Route::post('/tambahkeuangan', [KeuanganController::class, 'store'])->name('keuangan.store');
     Route::put('/updatekeuangan/{id}', [KeuanganController::class, 'update'])->name('keuangan.update');
     Route::delete('/hapuskeuangan/{id}', [KeuanganController::class, 'destroy'])->name('keuangan.destroy');
-    Route::get('/rekapkas', [KeuanganController::class, 'rekap'])->name('keuangan.rekap');
+
 
     // update profil
       Route::post('/updateprofilbendahara', [UserController::class, 'updateprofilbendahara'])->name('profil.updatebendahara');
@@ -103,7 +111,8 @@ Route::middleware([CekLogin::class . ':anggota,pembina'])->group(function () {
     Route::put('/kirimkarya/{id}', [PunishmentController::class, 'kirimKarya'])->name('punishment.kirim');
 });
 
-Route::middleware([CekLogin::class . ':bendahara, admin'])->group(function () {
+Route::middleware([CekLogin::class . ':bendahara,admin'])->group(function () {
+    Route::get('/rekapkas', [KeuanganController::class, 'rekap'])->name('keuangan.rekap');
       Route::get('/keuangan/rekap-pdf', [KeuanganController::class, 'cetakPDF'])->name('keuangan.cetakPDF');
 
 });
