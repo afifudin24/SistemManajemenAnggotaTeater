@@ -37,11 +37,12 @@ class DashboardController extends Controller {
             return view( 'bendahara.dashboard', compact( 'pemasukan', 'pengeluaran', 'bulanIni', 'saldoTerkini' ) );
             // return view( 'bendahara.dashboard' );
         } elseif ( $role == 'anggota' ) {
+            $punishment = Punishment::where( 'id_anggota', $user->id_anggota )->where( 'status_punishment', 'Perlu Upload Karya' )->count();
             $pembina = Pembina::where( 'id_pembina', $user->id_pembina )->first();
             $totalJadwal = Jadwal::where( 'id_pembina', $user->id_pembina )->count();
             $totalPunishment = Punishment::where( 'id_anggota', $user->id_anggota )->count();
             $totalKehadiranBulanIni = Kehadiran::where( 'id_anggota', $user->id_anggota )->where( 'status_kehadiran', 'Hadir' )->whereMonth( 'tanggal_pencatatan', date( 'm' ) )->count();
-            return view( 'anggota.dashboard', compact( 'pembina', 'totalJadwal', 'totalPunishment', 'totalKehadiranBulanIni' ) );
+            return view( 'anggota.dashboard', compact( 'pembina', 'totalJadwal', 'totalPunishment', 'totalKehadiranBulanIni', 'punishment' ) );
         }
 
     }

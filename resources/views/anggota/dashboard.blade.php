@@ -6,6 +6,13 @@
                 <div class="row">
                   <div class="col-12 col-xl-8 mb-4 mb-xl-0">
                     <h3 class="font-weight-bold">Selamat datang, {{ session('user')->nama }}</h3>
+                    @if($punishment > 0)
+                    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+  Kamu memiliki punishment. Segera upload karya!
+  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+</div>
+      
+                    @endif
                    
                   </div>
                   <div class="col-12 col-xl-4">
